@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class MovementAgent : MonoBehaviour
 {
+    /*
     //[NonSerializeField] 
     public int a; //автоматически SerializeField
     [SerializeField]
     private int A; //Получили 2 одинаковых имени в Unity :)
-
+    */
+    
     [SerializeField]
     private float m_Speed;
     [SerializeField]
