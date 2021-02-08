@@ -6,10 +6,11 @@ using UnityEngine;
 public class MovementAgent : MonoBehaviour
 {
     /*
-    //[NonSerializeField] 
-    public int a; //автоматически SerializeField
+    [NonSerialized] 
+    public int a; //по дефолту public это SerializeField
     [SerializeField]
-    private int A; //Получили 2 одинаковых имени в Unity :)
+    private int A;
+    //Если не сделать a NonSerialized, то получим 2 одинаковых имени в Unity :)
     */
     
     [SerializeField]
