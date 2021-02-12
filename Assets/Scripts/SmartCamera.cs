@@ -8,6 +8,7 @@ public class SmartCamera : MonoBehaviour
     private const float CameraSpeedMultiplier = 5;
     [SerializeField] private GameObject targetObject;
     private Camera _camera;
+    
     private void Start()
     {
         _camera = Camera.main;
@@ -19,7 +20,6 @@ public class SmartCamera : MonoBehaviour
             _camera.ScreenToWorldPoint(
                 new Vector3(_camera.pixelWidth, _camera.pixelHeight, transform.position.z)
                 );
-        //if (cameraPosition.magnitude > MaxDeviation) return;
 
         Vector3 objectPosition = targetObject.transform.position;
         if ((Mathf.Abs(objectPosition.x) > Mathf.Abs(cameraPosition.x))
