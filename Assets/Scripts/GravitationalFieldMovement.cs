@@ -7,26 +7,24 @@ public class GravitationalFieldMovement: MonoBehaviour
 {
     [SerializeField] private float mass;
     [SerializeField] private Vector3 speed;
-    [SerializeField] private Vector3 position;
+    [SerializeField] private Vector3 startingPosition;
     [SerializeField] private float g;
-
+    private const float DeltaTime = 0.02f; //default value
+    private const float MaxAcceleration = 25;
     private void Start()
     {
-        transform.position = position;
+        Time.fixedDeltaTime = DeltaTime;
+        transform.position = startingPosition;
     }
-
+    
     private void FixedUpdate()
     {
-        Application.targetFrameRate = 60; //frames per second
-        float deltaTime = Time.deltaTime; //согласно документации, это правильная deltaTime в любом случае
-        //float deltaTime = 1 / (float)Application.targetFrameRate;
-        ////так точно правильно, но менее красиво, поэтому хочу использовать Time.deltaTime, если это корректно
-        Vector3 position = transform.position; //Почему-то на это warning (local variable hides serialised field), но мне кажется, что так наоборот правильнее
+        float deltaTime = Time.deltaTime;
+        Vector3 position = transform.position;
         Vector3 acceleration = -1 * g * mass * position / (float) Math.Pow(position.magnitude, 3);
-        float max_acceleration = 25; //ограничение, чтобы не улетать на бесконечность
-        if (acceleration.magnitude > max_acceleration)
+        if (acceleration.magnitude > MaxAcceleration)
         {
-            acceleration = acceleration.normalized * max_acceleration;
+            acceleration = acceleration.normalized * MaxAcceleration;
         }
         Vector3 delta = speed * deltaTime + acceleration * (deltaTime * deltaTime) / 2;
         speed += acceleration * deltaTime;
