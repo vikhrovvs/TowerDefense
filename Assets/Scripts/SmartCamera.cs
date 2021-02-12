@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SmartCamera : MonoBehaviour
 {
-    private const float MaxDeviation = 100;
     private const float CameraSpeedMultiplier = 5;
     [SerializeField] private GameObject targetObject;
     private Camera _camera;
