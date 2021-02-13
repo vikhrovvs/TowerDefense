@@ -16,16 +16,16 @@ public class GravitationalFieldMovement: MonoBehaviour
     
     private void Start()
     {
-        if (heavyBody)
-        {
-            _heavyBodyPosition = heavyBody.transform.position;
-        }
         Time.fixedDeltaTime = DeltaTime;
         transform.position = startingPosition;
     }
     
     private void FixedUpdate()
     {
+        if (heavyBody)
+        {
+            _heavyBodyPosition = heavyBody.transform.position;
+        }
         var deltaTime = Time.deltaTime;
         Vector3 position = transform.position;
         Vector3 acceleration = -1 * g * mass * (position - _heavyBodyPosition) / (float) Math.Pow((position - _heavyBodyPosition).magnitude, 3);
