@@ -15,11 +15,19 @@ namespace Field
         
         private Camera m_Camera;
         private Vector3 m_Offset;
-        
-        private void OnValidate()
+
+
+        private void Start()
         {
             m_Camera = Camera.main;
             
+            float width = m_GridWidth * m_NodeSize;
+            float height = m_GridHeight * m_NodeSize;
+            transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
+        }
+
+        private void OnValidate()
+        {
             float width = m_GridWidth * m_NodeSize;
             float height = m_GridHeight * m_NodeSize;
             transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
@@ -67,13 +75,13 @@ namespace Field
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            for (int i = 0; i < m_GridWidth; ++i)
+            for (int i = 0; i <= m_GridWidth; ++i)
             {
                 Vector3 from = new Vector3(m_Offset.x + i * m_NodeSize, m_Offset.y, m_Offset.z);
                 Vector3 to = new Vector3(m_Offset.x + i * m_NodeSize, m_Offset.y, m_Offset.z + m_GridHeight * m_NodeSize);
                 Gizmos.DrawLine(from, to);
             }
-            for (int j = 0; j < m_GridWidth; ++j)
+            for (int j = 0; j <= m_GridHeight; ++j)
             {
                 Vector3 from = new Vector3(m_Offset.x, m_Offset.y, m_Offset.z + j * m_NodeSize);
                 Vector3 to = new Vector3(m_Offset.x + m_GridWidth * m_NodeSize, m_Offset.y, m_Offset.z + j * m_NodeSize);
