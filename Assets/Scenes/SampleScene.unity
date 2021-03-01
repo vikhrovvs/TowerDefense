@@ -251,8 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GridWidth: 20
   m_GridHeight: 20
-  m_TargetCoordinate: {x: 0, y: 0}
-  m_StartCoordinate: {x: 19, y: 19}
+  m_StartCoordinate: {x: 0, y: 0}
+  m_TargetCoordinate: {x: 19, y: 19}
   m_NodeSize: 1
 --- !u!64 &813330968
 MeshCollider:

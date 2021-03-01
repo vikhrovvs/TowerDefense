@@ -12,7 +12,7 @@ namespace Field
 
         private FlowFieldPathfinding m_Pathfinding;
 
-        public Grid(int width, int height, Vector3 offset, float nodeSize, Vector2Int target)
+        public Grid(int width, int height, Vector3 offset, float nodeSize, Vector2Int target, Vector2Int start)
         {
             m_Width = width;
             m_Height = height;
@@ -26,7 +26,7 @@ namespace Field
                 }
             }
             
-            m_Pathfinding = new FlowFieldPathfinding(this, target);
+            m_Pathfinding = new FlowFieldPathfinding(this, target, start);
             
             m_Pathfinding.UpdateField();
         }
@@ -40,9 +40,8 @@ namespace Field
             return GetNode(coordinate.x, coordinate.y);
         }
         
-        public Node GetNode(int i, int j) //можно и через ...
+        public Node GetNode(int i, int j)
         {
-            //Исключение (дефолтное) - плохо, так как вылетит до конца треда. Лучше руками проверить. Также exception'ы медленные
             if (i < 0 || i >= m_Width)
             {
                 return null;
@@ -70,6 +69,24 @@ namespace Field
         public void UpdatePathfinding()
         {
             m_Pathfinding.UpdateField();
+        }
+
+        public void TryOccupyNode(Vector2Int coordinate)
+        {
+            Node node = GetNode(coordinate.x, coordinate.y);
+            if (node.IsOccupied)
+            {
+                node.IsOccupied = false;
+                UpdatePathfinding();
+            }
+            else
+            {
+                if (m_Pathfinding.CanOccupy(coordinate))
+                {
+                    node.IsOccupied = !node.IsOccupied;
+                    UpdatePathfinding();
+                }
+            }
         }
     }
 }

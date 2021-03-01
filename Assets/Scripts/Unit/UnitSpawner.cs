@@ -26,7 +26,7 @@ namespace Unit
         
         private void SpawnUnit()
         {
-            Node startNode = m_GridHolder.Grid.GetNode(m_GridHolder.TargetCoordinate);
+            Node startNode = m_GridHolder.Grid.GetNode(m_GridHolder.StartCoordinate);
             Vector3 position = startNode.Position;
             GridMovementAgent movementAgent = Instantiate(m_MovementAgent, position, Quaternion.identity);
             movementAgent.SetStartNode(startNode);

@@ -1,5 +1,21 @@
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+
+struct Connection
+{
+    public Vector2Int Coordinate;
+    public float Weight;
+
+    public Connection(Vector2Int coordinate, float weight)
+    {
+        this.Coordinate = coordinate;
+        this.Weight = weight;
+    }
+}
+
+
 
 namespace Field
 {
@@ -7,33 +23,36 @@ namespace Field
     {
         private Grid m_Grid;
         private Vector2Int m_Target;
-
-        public FlowFieldPathfinding(Grid grid, Vector2Int target)
+        private Vector2Int m_Start;
+        private const float STRAIGHT_NEIGHBOUR_WEIGHT = 1;
+        private float m_DiagonalNeighbourWeight = (float) Math.Sqrt(2);
+        public FlowFieldPathfinding(Grid grid, Vector2Int target, Vector2Int start)
         {
             m_Grid = grid;
             m_Target = target;
+            m_Start = start;
         }
 
         public void UpdateField()
         {
             foreach (Node node in m_Grid.EnumerateAllNodes())
             {
-                node.ResetWeight();
+                node.Reset();
             }
-            Queue<Vector2Int> queue = new Queue<Vector2Int>();
+            Queue<Connection> queue = new Queue<Connection>();
             
-            queue.Enqueue(m_Target);
+            queue.Enqueue(new Connection(m_Target, 0));
             m_Grid.GetNode(m_Target).PathWeight = 0;
             
             while (queue.Count > 0)
             {
-                Vector2Int current = queue.Dequeue();
-                Node currentNode = m_Grid.GetNode(current);
-                float weightToTarget = currentNode.PathWeight + 1f;
+                Connection current = queue.Dequeue();
+                Node currentNode = m_Grid.GetNode(current.Coordinate);
+                float weightToTarget = currentNode.PathWeight + current.Weight;
                 
-                foreach (Vector2Int neighbour in GetNeighbours(current))
+                foreach (Connection neighbour in GetNeighbours(current.Coordinate))
                 {
-                    Node neighbourNode = m_Grid.GetNode(neighbour);
+                    Node neighbourNode = m_Grid.GetNode(neighbour.Coordinate);
                     if (weightToTarget < neighbourNode.PathWeight)
                     {
                         neighbourNode.NextNode = currentNode;
@@ -42,15 +61,30 @@ namespace Field
                     }
                 }
             }
-            
+
+            Node startNode = m_Grid.GetNode(m_Start);
+            Node targetNode = m_Grid.GetNode(m_Target);
+            startNode.OccupationAvailability = OccupationAvailability.CanNotOccupy;
+            Node nextNode = startNode.NextNode;
+            while (nextNode != targetNode)
+            {
+                nextNode.OccupationAvailability = OccupationAvailability.Undefined;
+                nextNode = nextNode.NextNode;
+            }
+            targetNode.OccupationAvailability = OccupationAvailability.CanNotOccupy;
         }
 
-        private IEnumerable<Vector2Int> GetNeighbours(Vector2Int coordinate)
+        private IEnumerable<Connection> GetNeighbours(Vector2Int coordinate)
         {
             Vector2Int rightCoordinate = coordinate + Vector2Int.right;
             Vector2Int leftCoordinate = coordinate + Vector2Int.left;
             Vector2Int upCoordinate = coordinate + Vector2Int.up;
             Vector2Int downCoordinate = coordinate + Vector2Int.down;
+            
+            Vector2Int upRightCoordinate = coordinate + Vector2Int.up + Vector2Int.right;
+            Vector2Int upLeftCoordinate = coordinate + Vector2Int.up + Vector2Int.left;
+            Vector2Int downRightCoordinate = coordinate + Vector2Int.down + Vector2Int.right;
+            Vector2Int downLeftCoordinate = coordinate + Vector2Int.down + Vector2Int.left;
 
             bool hasRightNode = rightCoordinate.x < m_Grid.Width && !m_Grid.GetNode(rightCoordinate).IsOccupied;
             bool hasLeftNode = leftCoordinate.x >= 0 && !m_Grid.GetNode(leftCoordinate).IsOccupied;
@@ -59,26 +93,67 @@ namespace Field
 
             if (hasRightNode)
             {
-                yield return rightCoordinate;
+                yield return new Connection(rightCoordinate, STRAIGHT_NEIGHBOUR_WEIGHT);
             }
             
             if (hasLeftNode)
             {
-                yield return leftCoordinate;
+                yield return new Connection(leftCoordinate, STRAIGHT_NEIGHBOUR_WEIGHT);
             }
             if (hasUpNode)
             {
-                yield return upCoordinate;
+                yield return new Connection(upCoordinate, STRAIGHT_NEIGHBOUR_WEIGHT);
             }
             if (hasDownNode)
             {
-                yield return downCoordinate;
-                
+                yield return new Connection(downCoordinate, STRAIGHT_NEIGHBOUR_WEIGHT);
+            }
+
+            if (hasUpNode && hasRightNode && !m_Grid.GetNode(upRightCoordinate).IsOccupied)
+            {
+                yield return new Connection(upRightCoordinate, m_DiagonalNeighbourWeight);
             }
             
-            //Метод yield return сам создает IEnumerable и сам возвращает в порядке выполнения кода
-            //Вернув yield return, дальше исполняемся только когда обработаем первого в foreach откуда вызвали
-            //существует yield break - для общего развития
+            if (hasUpNode && hasLeftNode && !m_Grid.GetNode(upLeftCoordinate).IsOccupied)
+            {
+                yield return new Connection(upLeftCoordinate, m_DiagonalNeighbourWeight);
+            }
+            
+            if (hasDownNode && hasRightNode && !m_Grid.GetNode(downRightCoordinate).IsOccupied)
+            {
+                yield return new Connection(downRightCoordinate, m_DiagonalNeighbourWeight);
+            }
+            
+            if (hasDownNode && hasLeftNode && !m_Grid.GetNode(downLeftCoordinate).IsOccupied)
+            {
+                yield return new Connection(downLeftCoordinate, m_DiagonalNeighbourWeight);
+            }
+        }
+
+        private bool CheckAvailability(Vector2Int coordinate)
+        {
+            Node node = m_Grid.GetNode(coordinate);
+            Queue<Connection> queue = new Queue<Connection>();
+            return true;
+        }
+        public bool CanOccupy(Vector2Int coordinate)
+        {
+            Node node = m_Grid.GetNode(coordinate);
+            OccupationAvailability availability = node.OccupationAvailability;
+            if (availability == OccupationAvailability.CanOccupy)
+            {
+                return true;
+            }
+            if (availability == OccupationAvailability.CanNotOccupy)
+            {
+                return false;
+            }
+            if (availability == OccupationAvailability.Undefined)
+            {
+                return CheckAvailability(coordinate);
+            }
+
+            return true;
         }
     }
 }

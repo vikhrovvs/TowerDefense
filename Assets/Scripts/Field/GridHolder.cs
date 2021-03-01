@@ -10,10 +10,10 @@ namespace Field
         private int m_GridHeight;
 
         [SerializeField]
-        private Vector2Int m_TargetCoordinate;
+        private Vector2Int m_StartCoordinate;
 
         [SerializeField]
-        private Vector2Int m_StartCoordinate;
+        private Vector2Int m_TargetCoordinate;
 
         [SerializeField]
         private float m_NodeSize;
@@ -24,23 +24,19 @@ namespace Field
 
         private Vector3 m_Offset;
 
-        public Vector2Int TargetCoordinate => m_TargetCoordinate;
+        public Vector2Int StartCoordinate => m_StartCoordinate;
 
         public Grid Grid => m_Grid;
 
         private void Awake() //вызывается в момент загрузки сцены первым делом, до старта
         {
-            m_Camera = Camera.main; //в 90% случаев одна камера. Лучше сохранить, так как Camera.main медленный метод, идет по всем объектам в сцене
-            
-            // Default plane size is 10 by 10
+            m_Camera = Camera.main;
             float width = m_GridWidth * m_NodeSize;
             float height = m_GridHeight * m_NodeSize;
             transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
 
             m_Offset = transform.position - (new Vector3(width, 0f, height) * 0.5f);
-            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_StartCoordinate);
-
-            //Несколько раз обращаться к трансформу неэффективно, но здесь это не важно - всего 2 обращения, причем в эвейке.
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
         }
 
         private void OnValidate()
@@ -50,7 +46,7 @@ namespace Field
             transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
 
             m_Offset = transform.position - (new Vector3(width, 0f, height) * 0.5f);
-            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_StartCoordinate);
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
         }
 
         private void Update()
@@ -65,14 +61,11 @@ namespace Field
             Ray ray = m_Camera.ScreenPointToRay(mousePosition); //исходит из камеры и есть направление
 
             if (Physics.Raycast(ray, out RaycastHit hit))
-                //Raycast возвращает bool. Если попали, то возвращает структуру RaycastHit
-                //Различие между классом и структурой: класс хранится ссылкой, структура лежит целиком в стеке
-                //Структуры именно копируются в метод, и методы их не меняют
+
             {
                 if (hit.transform != transform)
                 {
-                    return; //надо будет повесить коллайдер в юнити
-                    //Если трансформ хита не совпадает с трансформом объекта, на который повесили скрипт
+                    return;
                 }
 
                 Vector3 hitPosition = hit.point;
@@ -83,10 +76,7 @@ namespace Field
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Node node = m_Grid.GetNode(x, y);
-                    node.IsOccupied = !node.IsOccupied;
-                    m_Grid.UpdatePathfinding();
-
+                    m_Grid.TryOccupyNode(new Vector2Int(x, y));
                 }
             }
         }
@@ -108,11 +98,22 @@ namespace Field
                 
                 if (node.IsOccupied)
                 {
-                    Gizmos.color = Color.green;
+                    Gizmos.color = Color.blue;
                     Gizmos.DrawSphere(node.Position, 0.2f*m_NodeSize);
                     continue;
                 }
-                Gizmos.color = Color.red;
+                if (node.OccupationAvailability == OccupationAvailability.CanOccupy)
+                {
+                    Gizmos.color = Color.green;
+                }
+                if (node.OccupationAvailability == OccupationAvailability.Undefined)
+                {
+                    Gizmos.color = Color.yellow;
+                }
+                if (node.OccupationAvailability == OccupationAvailability.CanNotOccupy)
+                {
+                    Gizmos.color = Color.red;
+                }
                 Vector3 start = node.Position;
                 Vector3 end = node.NextNode.Position;
 
