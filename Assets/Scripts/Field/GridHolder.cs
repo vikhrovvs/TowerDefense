@@ -28,7 +28,7 @@ namespace Field
 
         public Grid Grid => m_Grid;
 
-        private void Awake() //вызывается в момент загрузки сцены первым делом, до старта
+        private void Awake()
         {
             m_Camera = Camera.main;
             float width = m_GridWidth * m_NodeSize;
@@ -51,14 +51,14 @@ namespace Field
 
         private void Update()
         {
-            if (m_Grid == null || m_Camera == null) //дорого т. к. у MonoBehaviour == null переопределено 
+            if (m_Grid == null || m_Camera == null)
             {
-                return; //отказоустойчивость на случай работы в команде или спустя время. Лучше всегда делать такие проверки
+                return;
             }
 
             Vector3 mousePosition = Input.mousePosition;
 
-            Ray ray = m_Camera.ScreenPointToRay(mousePosition); //исходит из камеры и есть направление
+            Ray ray = m_Camera.ScreenPointToRay(mousePosition);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
 
@@ -71,7 +71,7 @@ namespace Field
                 Vector3 hitPosition = hit.point;
                 Vector3 difference = hitPosition - m_Offset;
 
-                int x = (int)(difference.x / m_NodeSize); //каст вниз - это нам и нужно
+                int x = (int)(difference.x / m_NodeSize);
                 int y = (int)(difference.z / m_NodeSize);
 
                 if (Input.GetMouseButtonDown(0))
