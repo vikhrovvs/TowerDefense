@@ -28,8 +28,13 @@ namespace Field
 
         public void Reset()
         {
-            PathWeight = float.MaxValue; //гипотетически может быть больше площади поля, но не на практике
+            PathWeight = float.MaxValue;
             OccupationAvailability = OccupationAvailability.CanOccupy;
+        }
+
+        public void ResetWeight()
+        {
+            PathWeight = float.MaxValue;
         }
     }
 }

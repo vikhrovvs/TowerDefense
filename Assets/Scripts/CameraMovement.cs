@@ -4,7 +4,7 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField]
     private float m_Speed;
-    private const float SCROLL_SCALE = -10;
+    private const float SCROLL_SCALE = -5;
     private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
