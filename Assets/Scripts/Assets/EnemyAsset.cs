@@ -7,7 +7,6 @@ namespace Assets
     public class EnemyAsset : ScriptableObject
     {
         public int StartHealth;
-        
         public EnemyView ViewPrefab;
     }
 }

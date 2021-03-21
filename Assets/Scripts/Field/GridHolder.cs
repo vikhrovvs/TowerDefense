@@ -28,7 +28,7 @@ namespace Field
 
         public Grid Grid => m_Grid;
 
-        private void Awake()
+        public void CreateGrid()
         {
             m_Camera = Camera.main;
             float width = m_GridWidth * m_NodeSize;
@@ -36,7 +36,7 @@ namespace Field
             transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
 
             m_Offset = transform.position - (new Vector3(width, 0f, height) * 0.5f);
-            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_StartCoordinate, m_TargetCoordinate);
         }
 
         private void OnValidate()
@@ -46,10 +46,10 @@ namespace Field
             transform.localScale = new Vector3(width * 0.1f, 1f, height * 0.1f);
 
             m_Offset = transform.position - (new Vector3(width, 0f, height) * 0.5f);
-            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_TargetCoordinate, m_StartCoordinate);
+            m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_StartCoordinate, m_TargetCoordinate);
         }
 
-        private void Update()
+        public void RaycastInGrid()
         {
             if (m_Grid == null || m_Camera == null)
             {
@@ -65,6 +65,7 @@ namespace Field
             {
                 if (hit.transform != transform)
                 {
+                    m_Grid.UnselectNode();
                     return;
                 }
 
@@ -74,10 +75,16 @@ namespace Field
                 int x = (int)(difference.x / m_NodeSize);
                 int y = (int)(difference.z / m_NodeSize);
 
-                if (Input.GetMouseButtonDown(0))
+                /*if (Input.GetMouseButtonDown(0))
                 {
                     m_Grid.TryOccupyNode(new Vector2Int(x, y));
-                }
+                }*/
+
+                m_Grid.SelectCoordinate(new Vector2Int(x, y));
+            }
+            else
+            {
+                m_Grid.UnselectNode();
             }
         }
 
