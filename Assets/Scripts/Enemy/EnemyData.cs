@@ -6,10 +6,11 @@ namespace Enemy
     {
         private EnemyView m_View;
         public EnemyView View => m_View;
+        public readonly EnemyAsset Asset;
 
         public EnemyData(EnemyAsset asset)
         {
-            //to be implemented
+            Asset = asset;
         }
         public void AttachView(EnemyView view)
         {

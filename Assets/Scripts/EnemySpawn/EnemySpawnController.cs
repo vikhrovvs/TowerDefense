@@ -57,7 +57,8 @@ namespace EnemySpawn
         private void SpawnEnemy(EnemyAsset asset)
         {
             EnemyView view = Object.Instantiate(asset.ViewPrefab);
-            view.transform.position = m_Grid.GetStartNode().Position;
+            Vector3 startNodePosition = m_Grid.GetStartNode().Position;
+            view.transform.position = new Vector3(startNodePosition.x, view.transform.position.y, startNodePosition.z);   ;
             EnemyData data = new EnemyData(asset);
 
             data.AttachView(view);

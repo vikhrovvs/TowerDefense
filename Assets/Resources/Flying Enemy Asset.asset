@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e067fa388c547458c692e792f9ff74a, type: 3}
-  m_Name: Enemy Asset
+  m_Name: Flying Enemy Asset
   m_EditorClassIdentifier: 
   StartHealth: 100
-  IsFlyingEnemy: 0
-  ViewPrefab: {fileID: -3128009943693967900, guid: 5b2d0c926f3f2674f9944e64b8625a0e, type: 3}
+  IsFlyingEnemy: 1
+  ViewPrefab: {fileID: -3128009943693967900, guid: 66341a9e611935b4398db426c014d9aa, type: 3}

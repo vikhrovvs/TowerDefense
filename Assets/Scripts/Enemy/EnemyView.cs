@@ -19,8 +19,14 @@ namespace Enemy
 
         public void CreateMovementAgent(Grid grid)
         {
-            m_MovementAgent = new GridMovementAgent(5f, transform, grid);
-            //m_MovementAgent = new FlyMovementAgent(5f, transform, grid); //Подсказка для дз; интерфейс, поэтому подойдет любая реализация
+            if (!m_Data.Asset.IsFlyingEnemy)
+            {
+                m_MovementAgent = new GridMovementAgent(5f, transform, grid);
+            }
+            else
+            {
+                m_MovementAgent = new FlyingMovementAgent(5f, transform, grid);
+            }
 
         }
     }
