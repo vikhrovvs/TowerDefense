@@ -75,10 +75,12 @@ namespace Field
                 int x = (int)(difference.x / m_NodeSize);
                 int y = (int)(difference.z / m_NodeSize);
 
+                /*
                 if (Input.GetMouseButtonDown(0))
                 {
                     m_Grid.TryOccupyNode(new Vector2Int(x, y));
                 }
+                */
 
                 m_Grid.SelectCoordinate(new Vector2Int(x, y));
             }
@@ -102,13 +104,14 @@ namespace Field
                 {
                     continue;
                 }
-                
+                /*
                 if (node.IsOccupied)
                 {
                     Gizmos.color = Color.blue;
                     Gizmos.DrawSphere(node.Position, 0.2f*m_NodeSize);
                     continue;
                 }
+                */
                 if (node.OccupationAvailability == OccupationAvailability.CanOccupy)
                 {
                     Gizmos.color = Color.green;
