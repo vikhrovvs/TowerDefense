@@ -29,24 +29,19 @@ namespace TurretSpawn
             if (m_Grid.HasSelectedNode() && Input.GetMouseButtonDown(0))
             {
                 Node selectedNode = m_Grid.GetSelectedNode();
-                if (selectedNode.IsOccupied /* || !m_Grid.CanOccupy(selectedNode)*/)
-                {
-                    return;
-                }
-                SpawnTurret(m_Market.ChosenTurret, selectedNode);
+                TrySpawnTurret(m_Market.ChosenTurret, selectedNode);
             }
-            
         }
 
-        private void SpawnTurret(TurretAsset asset, Node node)
+        private void TrySpawnTurret(TurretAsset asset, Node node)
         {
-            TurretView view = Object.Instantiate(asset.ViewPrefab);
-            TurretData data = new TurretData(asset, node);
-            
-            data.AttachView(view);
-            
-            node.IsOccupied = true; // можно TryOccupy(), если внутри обновляем pathfinding
-            m_Grid.UpdatePathfinding();
+            bool wasOccupied = Game.Player.Grid.TryOccupyNode(node);
+            if (wasOccupied)
+            {
+                TurretView view = Object.Instantiate(asset.ViewPrefab);
+                TurretData data = new TurretData(asset, node);
+                data.AttachView(view);
+            }
         }
     }
 }

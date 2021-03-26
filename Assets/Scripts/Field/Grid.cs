@@ -116,9 +116,9 @@ namespace Field
             m_Pathfinding.UpdateField();
         }
 
-        public void TryOccupyNode(Vector2Int coordinate)
+        public void SwitchOccupyNode(Node node)
         {
-            Node node = GetNode(coordinate.x, coordinate.y);
+            //Node node = GetNode(coordinate.x, coordinate.y);
             if (node.IsOccupied)
             {
                 node.IsOccupied = false;
@@ -126,7 +126,7 @@ namespace Field
             }
             else
             {
-                if (m_Pathfinding.CanOccupy(coordinate))
+                if (m_Pathfinding.CanOccupy(node))
                 {
                     node.IsOccupied = !node.IsOccupied;
                     UpdatePathfinding();
@@ -134,6 +134,27 @@ namespace Field
             }
         }
 
+        public bool TryOccupyNode(Node node)
+        {
+            if (node.IsOccupied)
+            {
+                return false;
+            }
+            else
+            {
+                if (m_Pathfinding.CanOccupy(node))
+                {
+                    node.IsOccupied = !node.IsOccupied;
+                    UpdatePathfinding();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }   
+        }
+        
         public Node GetNodeAtPoint(Vector3 point)
         {
             Vector3 pointOnGrid = point - m_offset;

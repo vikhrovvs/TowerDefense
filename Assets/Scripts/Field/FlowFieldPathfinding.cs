@@ -160,9 +160,8 @@ namespace Field
 
             }
         }
-        private bool CheckAvailability(Vector2Int coordinate)
+        private bool CheckAvailability(Node testingNode)
         {
-            Node testingNode = m_Grid.GetNode(coordinate);
             testingNode.IsOccupied = true;
             
             foreach (Node node in m_Grid.EnumerateAllNodes())
@@ -198,9 +197,8 @@ namespace Field
             testingNode.IsOccupied = false;
             return false;
         }
-        public bool CanOccupy(Vector2Int coordinate)
+        public bool CanOccupy(Node node)
         {
-            Node node = m_Grid.GetNode(coordinate);
             OccupationAvailability availability = node.OccupationAvailability;
             if (availability == OccupationAvailability.CanOccupy)
             {
@@ -212,7 +210,7 @@ namespace Field
             }
             if (availability == OccupationAvailability.Undefined)
             {
-                return CheckAvailability(coordinate);
+                return CheckAvailability(node);
             }
 
             return true;
