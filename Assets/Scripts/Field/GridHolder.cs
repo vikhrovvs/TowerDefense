@@ -39,6 +39,7 @@ namespace Field
             m_Grid = new Grid(m_GridWidth, m_GridHeight, m_Offset, m_NodeSize, m_StartCoordinate, m_TargetCoordinate);
         }
 
+        
         private void OnValidate()
         {
             float width = m_GridWidth * m_NodeSize;
@@ -112,6 +113,13 @@ namespace Field
                     continue;
                 }
                 */
+                if (node.EnemyDatas.Count > 0)
+                {
+                    Gizmos.color = Color.magenta;
+                    Vector3 center = node.Position;
+                    Gizmos.DrawCube(center, Vector3.one);
+                }
+                
                 if (node.OccupationAvailability == OccupationAvailability.CanOccupy)
                 {
                     Gizmos.color = Color.green;

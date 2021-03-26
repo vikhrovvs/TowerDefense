@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da26f67e9e847d38c6f6f5ee41a3dde, type: 3}
   m_Name: Turret Asset
   m_EditorClassIdentifier: 
-  ViewPrefab: {fileID: 0}
+  ViewPrefab: {fileID: 3334441362939105147, guid: 317a56565796a0c4fb31e8652dcf33ce, type: 3}

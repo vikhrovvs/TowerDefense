@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Enemy;
+using Field;
 using Runtime;
 using UnityEngine;
 
@@ -11,6 +13,7 @@ namespace Turret.Weapon.Projectiles
         private float m_TimeBetweenShots;
         private float m_MaxDistance; //И так можем узнать, выносим, потому что часто будем использовать
         private float m_LastShotTime = 0;
+        private List<Node> m_Nodes;
         
         public TurretProjectileWeapon(TurretProjectileWeaponAsset asset, TurretView view)
         {
@@ -18,6 +21,8 @@ namespace Turret.Weapon.Projectiles
             m_View = view;
             m_TimeBetweenShots = 1f / m_Asset.RateOfFire;
             m_MaxDistance = m_Asset.MaxDistance;
+
+            m_Nodes = Game.Player.Grid.GetNodesInCircle(m_View.transform.position, m_MaxDistance);
         }
 
         public void TickShoot()
@@ -29,7 +34,7 @@ namespace Turret.Weapon.Projectiles
             }
 
             EnemyData closestEnemyData =
-                Game.Player.EnemySearch.GetClosestEnemy(m_View.transform.position, m_MaxDistance);
+                EnemySearch.GetClosestEnemy(m_View.transform.position, m_MaxDistance, m_Nodes);
 
             if (closestEnemyData == null)
             {

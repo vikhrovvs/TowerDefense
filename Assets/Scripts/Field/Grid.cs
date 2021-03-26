@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ namespace Field
 
         private FlowFieldPathfinding m_Pathfinding;
 
+        private Vector3 m_offset;
+        private float m_nodeSize;
+
         public Grid(int width, int height, Vector3 offset, float nodeSize, Vector2Int start, Vector2Int target) //order
         {
             m_Width = width;
@@ -25,7 +29,9 @@ namespace Field
             m_StartCoordinate = start;
             m_TargetCoordinate = target;
 
-
+            m_offset = offset;
+            m_nodeSize = nodeSize;
+            
             m_Nodes = new Node[m_Width, m_Height];
             for (int i = 0; i < m_Nodes.GetLength(0); i++)
             {
@@ -126,6 +132,29 @@ namespace Field
                     UpdatePathfinding();
                 }
             }
+        }
+
+        public Node GetNodeAtPoint(Vector3 point)
+        {
+            Vector3 pointOnGrid = point - m_offset;
+            int i = (int)Math.Floor(pointOnGrid.x / m_nodeSize);
+            int j = (int)Math.Floor(pointOnGrid.z / m_nodeSize);
+            return GetNode(i, j);
+            //m_Nodes[i, j] = new Node(offset + new Vector3(i + .5f, 0, j + .5f) * nodeSize); 
+        }
+
+        public List<Node> GetNodesInCircle(Vector3 point, float radius)
+        {
+            List<Node> nodes = new List<Node>();
+            foreach (Node node in EnumerateAllNodes())
+            {
+                float distance = (node.Position - point).magnitude;
+                if (distance < radius)
+                {
+                    nodes.Add(GetNodeAtPoint(point));
+                }
+            }
+            return nodes;
         }
     }
 }
