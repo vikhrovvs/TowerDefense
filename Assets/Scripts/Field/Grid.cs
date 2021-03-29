@@ -172,7 +172,7 @@ namespace Field
                 float distance = (node.Position - point).magnitude;
                 if (distance < radius)
                 {
-                    nodes.Add(GetNodeAtPoint(point));
+                    nodes.Add(node);
                 }
             }
             return nodes;

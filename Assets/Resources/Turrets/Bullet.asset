@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da26f67e9e847d38c6f6f5ee41a3dde, type: 3}
-  m_Name: Turret Asset
+  m_Script: {fileID: 11500000, guid: 61f2462daf49499687c4ed78026d182d, type: 3}
+  m_Name: Bullet
   m_EditorClassIdentifier: 
-  ViewPrefab: {fileID: 3334441362939105147, guid: 317a56565796a0c4fb31e8652dcf33ce, type: 3}
+  m_BulletPrefab: {fileID: 8704285288690737227, guid: 701475ba65efa5f4a8a290d7550d60b7, type: 3}

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e067fa388c547458c692e792f9ff74a, type: 3}
-  m_Name: Enemy Asset
+  m_Script: {fileID: 11500000, guid: 345b90aa25e445ac9dc566a4649b92d6, type: 3}
+  m_Name: Bullet Weapon
   m_EditorClassIdentifier: 
-  StartHealth: 40
-  IsFlyingEnemy: 0
-  ViewPrefab: {fileID: -3128009943693967900, guid: 5b2d0c926f3f2674f9944e64b8625a0e, type: 3}
+  RateOfFire: 5
+  MaxDistance: 10
+  ProjectileAsset: {fileID: 11400000, guid: 335d51813184b504db90b48fcf67ad59, type: 2}

@@ -114,14 +114,14 @@ namespace Field
                 }
                 */
                 
-                /*
+                
                 if (node.EnemyDatas.Count > 0)
                 {
                     Gizmos.color = Color.magenta;
                     Vector3 center = node.Position;
                     Gizmos.DrawCube(center, Vector3.one);
                 }
-                */
+                
                 
                 if (node.OccupationAvailability == OccupationAvailability.CanOccupy)
                 {

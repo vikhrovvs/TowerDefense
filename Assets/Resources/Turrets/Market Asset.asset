@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8e2bcb905f540eab671ac95e5e8dfab, type: 3}
-  m_Name: Turret Market Asset
+  m_Name: Market Asset
   m_EditorClassIdentifier: 
   TurretAssets:
   - {fileID: 11400000, guid: 0d5768adb779b8c47b83fdb0a0552089, type: 2}
