@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61f2462daf49499687c4ed78026d182d, type: 3}
-  m_Name: Bullet
+  m_Name: Arrow
   m_EditorClassIdentifier: 
-  m_BulletPrefab: {fileID: 8704285288690737227, guid: 701475ba65efa5f4a8a290d7550d60b7, type: 3}
+  m_BulletPrefab: {fileID: -4633892228961880379, guid: 73f84dc74f3e7704b81d6c60c899fc21, type: 3}
+  Speed: 40
+  Damage: 5

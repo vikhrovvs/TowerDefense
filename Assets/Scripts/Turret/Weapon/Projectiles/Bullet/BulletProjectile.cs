@@ -5,16 +5,19 @@ namespace Turret.Weapon.Projectiles.Bullet
 {
     public class BulletProjectile : MonoBehaviour, IProjectile
     {
-        private float m_Speed = 10f;
-        private int m_Damage = 5;
+        private float m_Speed;
+        private float m_Damage;
         private bool m_DidHit = false;
         private EnemyData m_HitEnemy = null;
+
+        public void SetAsset(BulletProjectileAsset bulletProjectileAsset)
+        {
+            m_Speed = bulletProjectileAsset.Speed;
+            m_Damage = bulletProjectileAsset.Damage;
+        }
         public void TickApproaching()
         {
             transform.Translate(transform.forward * (m_Speed * Time.deltaTime), Space.World);
-            //Должны в начале повернуть в правильную сторону
-            //Self/World
-            //Self - с учетом поворота тела в собственном пространстве; по умолчанию
         }
 
         private void OnTriggerEnter(Collider other)

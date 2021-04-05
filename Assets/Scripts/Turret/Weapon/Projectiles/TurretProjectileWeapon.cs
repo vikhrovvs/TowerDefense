@@ -91,6 +91,7 @@ namespace Turret.Weapon.Projectiles
         private void Shoot(EnemyData enemyData)
         {
             m_Projectiles.Add(m_Asset.ProjectileAsset.CreateProjectile(m_View.ProjectileOrigin.position, m_View.ProjectileOrigin.forward, enemyData));
+            m_View.AnimateShot();
         }
     }
 }

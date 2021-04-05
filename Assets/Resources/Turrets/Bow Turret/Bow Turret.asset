@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da26f67e9e847d38c6f6f5ee41a3dde, type: 3}
-  m_Name: Turret
+  m_Name: Bow Turret
   m_EditorClassIdentifier: 
-  ViewPrefab: {fileID: 3334441362939105147, guid: 317a56565796a0c4fb31e8652dcf33ce, type: 3}
-  WeaponAsset: {fileID: 11400000, guid: cd4c4baaba843544796b67df1556a40d, type: 2}
+  ViewPrefab: {fileID: 4571155200361926915, guid: fb958ec986397f04d8a6ea63d28dff47, type: 3}
+  WeaponAsset: {fileID: 11400000, guid: 3e8b0aef534403a4f83f934012c421cc, type: 2}
