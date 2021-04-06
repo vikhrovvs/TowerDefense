@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 345b90aa25e445ac9dc566a4649b92d6, type: 3}
-  m_Name: Arrow weapon
+  m_Script: {fileID: 11500000, guid: 0da26f67e9e847d38c6f6f5ee41a3dde, type: 3}
+  m_Name: Lazer Turret
   m_EditorClassIdentifier: 
-  RateOfFire: 2.5
-  MaxDistance: 10
-  ProjectileAsset: {fileID: 11400000, guid: d06a94f092a5d894da967c8d48928820, type: 2}
+  ViewPrefab: {fileID: 3334441362939105147, guid: ffcb4aebca0462a4487ea64890e8b9ec, type: 3}
+  WeaponAsset: {fileID: 11400000, guid: 53a0718dfdfdcd740aff15d97db70cc3, type: 2}

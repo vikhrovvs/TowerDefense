@@ -8,7 +8,7 @@ namespace Turret
         private Transform m_ProjectileOrigin;
 
         [SerializeField]
-        private Animator m_Animator;
+        private Animator m_Animator = null;
         
         [SerializeField]
         private Transform m_Tower;
@@ -33,7 +33,10 @@ namespace Turret
 
         public void AnimateShot()
         {
-            m_Animator.SetTrigger(ShotAnimationIndex);
+            if (m_Animator != null)
+            {
+                m_Animator.SetTrigger(ShotAnimationIndex);
+            }
         }
     }
 }
