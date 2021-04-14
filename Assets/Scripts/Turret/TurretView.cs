@@ -31,6 +31,11 @@ namespace Turret
             m_Tower.LookAt(point);
         }
 
+        public Vector3 ProjectileOriginPosition()
+        {
+            return m_ProjectileOrigin.position;
+        }
+        
         public void AnimateShot()
         {
             if (m_Animator != null)

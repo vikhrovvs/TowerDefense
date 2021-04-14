@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181bc7c1b07b43439b74c99a2fc8bfce, type: 3}
   m_Name: Lazer Weapon
   m_EditorClassIdentifier: 
-  MaxDistance: 5
+  MaxDistance: 15
   LineRendererPrefab: {fileID: 5515197134422597353, guid: 2296acc4b8d40314a87cd9b537e2b46d, type: 3}
-  Damage: 10
+  Damage: 5

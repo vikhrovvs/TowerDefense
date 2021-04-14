@@ -36,8 +36,12 @@ namespace Turret.Weapon.Projectiles.Rocket
             {
                 foreach (EnemyData enemyData in node.EnemyDatas)
                 {
-                    //Debug.Log("Dealt damage");
-                    m_HitEnemies.Add(enemyData);
+                    if ((enemyData.View.transform.position - transform.position).magnitude < m_AOE)
+                    {
+                        //Debug.Log("Dealt damage");
+                        m_HitEnemies.Add(enemyData);   
+                    }
+
                 }
             }
         }

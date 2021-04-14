@@ -28,7 +28,7 @@ namespace Turret.Weapon.Lazer
             m_View = view;
             m_MaxDistance = m_Asset.MaxDistance;
             m_Damage = asset.Damage;
-            
+
             m_LineRenderer = Object.Instantiate(m_Asset.LineRendererPrefab, m_View.ProjectileOrigin.transform);
             m_Nodes = Game.Player.Grid.GetNodesInCircle(m_View.ProjectileOrigin.transform.position, m_MaxDistance);
         }
@@ -43,11 +43,14 @@ namespace Turret.Weapon.Lazer
             {
                 Vector3 closestEnemyPosition = m_ClosestEnemyData.View.transform.position;
                 m_View.TowerLookAt(closestEnemyPosition);
-                m_LineRenderer.gameObject.transform.LookAt(closestEnemyPosition);
-                float distance = (m_View.ProjectileOrigin.transform.position - closestEnemyPosition).magnitude;
-                m_LineRenderer.gameObject.transform.localScale = new Vector3(1, 1, distance);
+
+                m_LineRenderer.SetPosition(0, m_View.ProjectileOrigin.position);
+                m_LineRenderer.SetPosition(1, closestEnemyPosition);
+                
                 m_LineRenderer.gameObject.SetActive(true);
+
                 m_ClosestEnemyData.GetDamage(m_Damage * Time.deltaTime);
+
                 //Debug.Log("Dealt damage");
             }
         }
