@@ -32,7 +32,6 @@ namespace Enemy
             {
                 return;
             }
-            
             Vector3 target = m_TargetNode.Position;
             
             Vector3 difference = target - m_Transform.position;
@@ -60,6 +59,11 @@ namespace Enemy
             Vector3 dir = difference.normalized;
             Vector3 delta = dir * (m_Speed * Time.deltaTime);
             m_Transform.Translate(delta);
+        }
+
+        public void Die()
+        {
+            m_CurrentNode.EnemyDatas.Remove(m_EnemyData);
         }
 
         private void SetTargetNode(Node node, EnemyData enemyData)
