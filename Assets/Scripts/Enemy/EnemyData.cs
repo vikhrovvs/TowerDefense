@@ -16,6 +16,8 @@ namespace Enemy
         public EnemyAsset Asset => m_Asset;
         //public readonly EnemyAsset Asset;
 
+        public bool IsDead => m_Health <= 0;
+        
         public EnemyData(EnemyAsset asset)
         {
             m_Health = asset.StartHealth;
@@ -29,18 +31,25 @@ namespace Enemy
 
         public void GetDamage(float damage)
         {
-            m_Health -= damage;
-            if (m_Health < 0)
+            if (IsDead)
             {
-                Die();
+                return;
             }
+            m_Health -= damage;
         }
 
-        private void Die()
+        public void Die()
         {
             m_View.Die();
-            Game.Player.EnemyDied(this);
+            //Game.Player.EnemyDied(this);
             //Debug.Log("Die");
+        }
+
+        public void ReachedTarget()
+        {
+            m_Health = 0;
+            //IsDead -> True; EnemyDeathController не вызовется, т. к. из списка удаляем
+            m_View.ReachedTarget();
         }
     }
 }

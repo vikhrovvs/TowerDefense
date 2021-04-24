@@ -50,5 +50,10 @@ namespace Enemy
                 m_Animator.SetTrigger(DieIndex);
             }
         }
+
+        public void ReachedTarget()
+        {
+            Destroy(gameObject, 0.1f);
+        }
     }
 }

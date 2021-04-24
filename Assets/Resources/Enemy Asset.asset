@@ -16,3 +16,5 @@ MonoBehaviour:
   Speed: 3
   IsFlyingEnemy: 0
   ViewPrefab: {fileID: -3904259988855321577, guid: abb9dcd0e9926f54e99eb31b963ba869, type: 3}
+  Damage: 4
+  Reward: 1

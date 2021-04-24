@@ -28,8 +28,16 @@ namespace TurretSpawn
         {
             if (m_Grid.HasSelectedNode() && Input.GetMouseButtonDown(0))
             {
-                Node selectedNode = m_Grid.GetSelectedNode();
-                TrySpawnTurret(m_Market.ChosenTurret, selectedNode);
+                TurretAsset asset = m_Market.ChosenTurret;
+                if (asset != null)
+                {
+                    Node selectedNode = m_Grid.GetSelectedNode();
+                    TrySpawnTurret(asset, selectedNode);
+                }
+                else
+                {
+                    Debug.Log("Not enough money!");
+                }
             }
         }
 
@@ -38,6 +46,7 @@ namespace TurretSpawn
             bool wasOccupied = Game.Player.Grid.TryOccupyNode(node);
             if (wasOccupied)
             {
+                m_Market.BuyTurret(asset);
                 TurretView view = Object.Instantiate(asset.ViewPrefab);
                 TurretData data = new TurretData(asset, node);
                 data.AttachView(view);

@@ -52,6 +52,11 @@ namespace Enemy
             
         }
 
+        public Node GetCurrentNode()
+        {
+            return m_CurrentNode;
+        }
+
         public void Die()
         {
             m_CurrentNode.EnemyDatas.Remove(m_EnemyData);

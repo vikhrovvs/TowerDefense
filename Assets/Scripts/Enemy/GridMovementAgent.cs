@@ -72,5 +72,10 @@ namespace Enemy
             m_CurrentNode = node;
             node.EnemyDatas.Add(enemyData);
         }
+
+        public Node GetCurrentNode()
+        {
+            return m_CurrentNode;
+        }
     }
 }
