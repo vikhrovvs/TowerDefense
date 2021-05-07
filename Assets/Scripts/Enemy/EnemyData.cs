@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Assets;
 using Runtime;
@@ -16,8 +17,11 @@ namespace Enemy
         public EnemyAsset Asset => m_Asset;
         //public readonly EnemyAsset Asset;
 
+        public float Health => m_Health;
+
         public bool IsDead => m_Health <= 0;
-        
+
+        public event Action<float> HealthChanged; 
         public EnemyData(EnemyAsset asset)
         {
             m_Health = asset.StartHealth;
@@ -36,6 +40,11 @@ namespace Enemy
                 return;
             }
             m_Health -= damage;
+            if (m_Health < 0)
+            {
+                m_Health = 0;
+            }
+            HealthChanged?.Invoke(m_Health);
         }
 
         public void Die()

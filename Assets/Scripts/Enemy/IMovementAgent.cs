@@ -7,5 +7,6 @@ namespace Enemy
         void TickMovement();
         Node GetCurrentNode();
         void Die();
+        void Reach();
     }
 }

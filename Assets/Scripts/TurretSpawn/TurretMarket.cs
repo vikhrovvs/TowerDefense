@@ -8,20 +8,39 @@ namespace TurretSpawn
 {
     public class TurretMarket
     {
-        private TurretMarketAsset m_Asset;
+        private TurretAsset m_ChosenTurret;
+
         private int m_Money;
 
         public int Money => m_Money;
         public event Action<int> MoneyChanged;
 
-        public TurretMarket(TurretMarketAsset asset)
+        public TurretMarket()
         {
-            m_Asset = asset;
             m_Money = Game.CurrentLevel.StartMoney;
         }
-        public TurretAsset ChosenTurret
-            => m_Money < m_Asset.TurretAssets[0].Price ? null : m_Asset.TurretAssets[0];
 
+        public TurretAsset ChosenTurret
+        {
+            get
+            {
+                if (m_ChosenTurret == null)
+                {
+                    return null;
+                }
+                return m_ChosenTurret.Price >= m_Money ? null : m_ChosenTurret;
+
+            }
+        }
+
+        public void ChooseTurret(TurretAsset asset)
+        {
+            if (asset.Price > m_Money)
+            {
+                return;
+            }
+            m_ChosenTurret = asset;
+        }
         public void BuyTurret(TurretAsset turretAsset)
         {
             if (turretAsset.Price > m_Money)

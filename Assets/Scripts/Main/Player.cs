@@ -36,7 +36,7 @@ namespace Main
             GridHolder.CreateGrid();
             Grid = GridHolder.Grid;
 
-            TurretMarket = new TurretMarket(Game.CurrentLevel.TurretMarketAsset);
+            TurretMarket = new TurretMarket();
             m_Health = Game.CurrentLevel.StartHealth;
         }
 
@@ -96,6 +96,16 @@ namespace Main
         {
             Game.StopPlaying();
             Debug.Log("Lose!");
+        }
+
+        public void Pause()
+        {
+            Time.timeScale = 0f;
+        }
+
+        public void UnPause()
+        {
+            Time.timeScale = 1f;
         }
         
     }

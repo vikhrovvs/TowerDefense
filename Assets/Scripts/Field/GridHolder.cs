@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Field
 {
@@ -57,6 +58,11 @@ namespace Field
                 return;
             }
 
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+            
             Vector3 mousePosition = Input.mousePosition;
 
             Ray ray = m_Camera.ScreenPointToRay(mousePosition);
